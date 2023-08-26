@@ -8,7 +8,6 @@ function startGame(){
 $(document).keydown(function(){
     if(!start){
         $("#level-title").text("Level "+ level);
-        //nextSequence();
         start = true;
         gamePattern =[];
         nextSequence();
@@ -32,7 +31,7 @@ $(".btn").click(function(){
     var userChosenColour = (this.id);
     //console.log (userChosenColour);
     userClickedPattern.push (userChosenColour);
-    console.log ("this is from buttonclick function "+userClickedPattern);
+    //console.log ("this is from buttonclick function "+userClickedPattern);
     playSound(userChosenColour);
     animatePress(userChosenColour);
     checkAnswer(userClickedPattern.lastIndexOf(userChosenColour));
@@ -52,26 +51,18 @@ function animatePress(currentColor){
 }
 
 function checkAnswer(currentLevel){
-    console.log ("this is from checkAnswer function  gameptn: "+gamePattern);
-    console.log ("this is from checkAnswer function usrclick: "+userClickedPattern);
     for (let i = 0; i < userClickedPattern.length; i++) {
         if(gamePattern[i]!==userClickedPattern[i]){
-            gameOver() 
+            gameOver(); 
         } 
     }
     if(currentLevel===gamePattern.length-1){
-        console.log ("Level is " + currentLevel);
-        console.log ("this is from checkAnswer in if function  gameptn: "+gamePattern);
-        console.log ("this is from checkAnswer in if function usrclick: "+userClickedPattern);
         if (compareArrays(userClickedPattern,gamePattern)){
             console.log ("Success!"); 
-            setTimeout(nextSequence(), 1000);
-                 
+            setTimeout(nextSequence(), 1000);    
            } else{
             console.log ("Error!");
             gameOver();
-            //setTimeout(startOver(), 1000);
-            //console.log ("i is in if " + i);
           }     
     }
 }
@@ -79,7 +70,7 @@ function compareArrays (a, b){
     return a.toString() === b.toString();
   };
 function gameOver(){
-    $("#level-title").text("Game Over!, Wait any Key to Restart"); 
+    $("#level-title").text("Game Over!, Wait a Movement to Restart"); 
     $("body").addClass("game-over");
     setTimeout(function(){
         $("body").removeClass("game-over");
@@ -88,12 +79,4 @@ function gameOver(){
     setTimeout(function(){
         location.reload();
     }, 2000); 
-}
-//actually in this code this is not calling!
-function startOver(){
-    start = false;
-    gamePattern =[];
-    level=0;
-    //startGame();
-
 }
